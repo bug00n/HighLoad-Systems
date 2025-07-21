@@ -1,0 +1,36 @@
+# CMake building
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# CLion files
+.idea/
+*.iml
+cmake-build-*/
+cmake-build-*/**
+build/
+build-*/
+
+# Binary
+*.exe
+*.out
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.dylib
+
+# Logs
+*.log
+
+# Cache
+*.swp
+*.swo
+*.tmp
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
