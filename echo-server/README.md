@@ -34,4 +34,4 @@ It accepts client connections, echoes back received messages, and logs all event
 5. Run the echo_server executable inside CLion or from the terminal.
 
 ### Using MinGW-w64 (Command Line)
-g++ -std=c++20 echo_server.cpp -o echo_server.exe -lws2_32
+g++ -std=c++20 server.cpp -o server.exe -lws2_32
