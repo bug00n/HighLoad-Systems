@@ -1,4 +1,4 @@
-# Echo Server with Stress Test
+# Echo Server with Logging
 
 ## Overview
 This project implements a simple TCP echo server written in **C++20** using the **Winsock2 API** on Windows.  
