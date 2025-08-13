@@ -17,7 +17,7 @@ ___
   This is my first project with division code into different files.
   I found out what header and executable files are.
   
-* ### __*[account-manager](https://github.com/bug00n/HighLoad-Systems/tree/main/API%2BRedis%2BPostgreSQL-py)*__
+* ### __*[account-manager](https://github.com/bug00n/HighLoad-Systems/tree/main/account-manager-py)*__
   
   There I got to know how Redis and PostgreSQL introduced into Python.
   Also I tried FastAPI for the first time.  
