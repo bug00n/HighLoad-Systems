@@ -42,8 +42,8 @@ mkdir -p build
 cd build
 cmake ..
 cmake --build .
-.\server
-.\client # If you want to use it
+./server
+./client # If you want to use it
 ```
 
 ---
