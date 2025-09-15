@@ -24,10 +24,10 @@ ___
   I had some problems with testing the API by using uvicorn, but
   it helped me understand how uvicorn and processes work.
 
-* ### __*[account-manager](https://github.com/bug00n/HighLoad-Systems/tree/main/messager-cpp)*__
+* ### __*[messager](https://github.com/bug00n/HighLoad-Systems/tree/main/messager-cpp)*__
   
   I worked with asynchronicity in C++, experimented with OOP. I solved
   problems with dependencies by using header-files. Also there some troubles
   with segmentation fault because constructor initializes variable in order
-  which specified specified inside the class but no inside constructor. Also
-  there I for the first time used library boost::asio.
+  which specified inside the class but no inside constructor. Also
+  there I used library boost::asio for the first time.
