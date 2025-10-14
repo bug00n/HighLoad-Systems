@@ -1,6 +1,6 @@
-#include "user.cpp"
-#include "connection.cpp"
-#include "server.cpp"
+#include "user.h"
+#include "connection.h"
+#include "server.h"
 
 #include <iostream>
 
