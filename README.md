@@ -32,6 +32,6 @@ ___
   which specified inside the class but no inside constructor. Also
   there I used library boost::asio for the first time.
 
-* ### __*[image processor](https://github.com/bug00n/HighLoad-Systems/tree/main/messager-cpp)*__
+* ### __*[image processor](https://github.com/bug00n/HighLoad-Systems/tree/main/image_processor)*__
   
   I am proud of this project. It's a console application which apply some filters with few arguments to image 24bmp - format. The project taught me how to write test cases on C++ and how to work with exceptions. Also I found out how to an application build.
