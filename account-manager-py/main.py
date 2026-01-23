@@ -1,14 +1,15 @@
 from fastapi import FastAPI, Body, Response, Request
 from starlette.responses import JSONResponse
 
-import DB as SQL
-import cache
-import token2
+from dotenv import load_dotenv
+from os import getenv
 
-import logging
+load_dotenv()
 
-logging.basicConfig(level=logging.DEBUG)
-log = logging.getLogger("uvicorn.error")
+import src.database as SQL
+import src.cache as cache
+import src.token2 as token
+from logging import log
 
 SQL.create()
 database = SQL.connect()
@@ -50,14 +51,9 @@ def login(response: Response, data = Body({})):
         log.info(f"Error: token has not been created for {user_id}, e{e}")
 
 def autorization(token_) -> bool:
-    try:
-        if not cache.check_session(token_):
-            print(f"Error: your session is expired")
-            return False
+    if cache.check_session(token_):
         return True
-    except:
-        print(f"Error: your session is expired")
-        return False
+    return False
 
 @app.get("/logout")
 def logout(request: Request, response: Response):
@@ -75,7 +71,7 @@ def me(request: Request):
     if not autorization(token_):
         return JSONResponse({"error": "Invalid token"}, 401)
     else:
-        data = token2.decode_token(token_)
+        data = token.decode_token(token_)
         user_id, login_, info = data["user_id"], data["login"], data["info"]
         return {"info": info}
 
@@ -86,6 +82,6 @@ def active(request: Request):
         print("Invalid token")
         return JSONResponse({"error": "Invalid token"}, 401)
     else:
-        data = token2.decode_token(token_)
+        data = token.decode_token(token_)
         user_id, login_, info = data["user_id"], data["login"], data["info"]
         return {"info": login_}

@@ -1,12 +1,15 @@
 import psycopg2 as sql
+from os import getenv
+from src.logger import log
+
 
 def create(name="users_db"):
     conn = sql.connect(
-        dbname="postgres",
-        user="postgres",
-        password="postgres",
-        host="localhost",
-        port=5432
+        dbname=getenv("DBNAME_PGRS"),
+        user=getenv("USER_PGRS"),
+        password=getenv("PASSWORD_PGRS"),
+        host=getenv("HOST_PGRS"),
+        port=getenv("PORT_PGRS")
     )
 
     cursor = conn.cursor()
@@ -15,18 +18,18 @@ def create(name="users_db"):
     try:
         cursor.execute(f"CREATE DATABASE {name}")
     except (Exception, sql.DatabaseError) as error:
-        print("Warning: database creation failed, database already exists")
+        log.warning("database creation failed, database already exists")
 
     cursor.close()
     conn.close()
 
 def connect(name="users_db") -> tuple:
     conn = sql.connect(
-        dbname=name,
-        user="postgres",
-        password="postgres",
-        host="localhost",
-        port=5432
+        dbname=getenv("DBNAME_PGRS"),
+        user=getenv("USER_PGRS"),
+        password=getenv("PASSWORD_PGRS"),
+        host=getenv("HOST_PGRS"),
+        port=getenv("PORT_PGRS")
     )
 
     conn.autocommit = True
@@ -62,7 +65,7 @@ def check_password(database, login, password):
             return data
         return None
     except:
-        print("Error: Login failed")
+        log.error("Login failed")
         return None
 
 def data_builder(database, user_id):
