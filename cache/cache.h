@@ -1,59 +1,74 @@
 #pragma once
+#pragma GCC optimize ("O3")
 
+#include <atomic>
+#include <condition_variable>
 #include <cstdint>
+#include <future>
+#include <memory>
+#include <mutex>
+#include <optional>
+#include <queue>
+#include <shared_mutex>
+#include <thread>
 #include <unordered_map>
 #include <vector>
-#include <optional>
-#include <shared_mutex>
-#include <condition_variable>
-#include <mutex>
-#include <queue>
-#include <atomic>
-#include <future>
-#include <thread>
-#include <memory>
+
 
 template <typename KeyType, typename ValueType>
-class Shard {
+class alignas(64) Shard {
  private:
-    std::unordered_map<KeyType, ValueType> storage;
+    const int MAX_KEYS = 50'000;
+    char padding[64];
+
+    std::unordered_map <KeyType, ValueType> storage;
     mutable std::shared_mutex mutex;
 
-    std::queue<std::function<void()>> tasks;
+    std::queue <std::function <void()>> tasks;
     std::mutex tasks_mutex;
     std::condition_variable tasks_cv;
-    std::atomic<bool> stop{false};
+    std::atomic <bool> stop = false;
     std::thread worker;
 
     void worker_loop() {
         while (!stop) {
-            std::function<void()> task;
+            std::function <void()> task;
             {
                 std::unique_lock lock(tasks_mutex);
                 tasks_cv.wait(lock, [&]{ return !tasks.empty() || stop; });
-                if (tasks.empty() && stop) break;
+                if (tasks.empty() && stop) {
+                    break;
+                }
                 if (!tasks.empty()) {
                     task = std::move(tasks.front());
                     tasks.pop();
                 }
             }
-            if (task) task();
+            if (task) {
+                task();
+            }
         }
     }
 
  public:
-    Shard() : worker([this]{ worker_loop(); }) {}
+    Shard() : worker([this]{ worker_loop(); }) {
+        storage.reserve(MAX_KEYS);
+    }
 
     ~Shard() {
         stop = true;
         tasks_cv.notify_all();
-        if (worker.joinable()) worker.join();
+        if (worker.joinable()) {
+            worker.join();
+        }
     }
 
     std::optional<ValueType> get(const KeyType& key) const {
         std::shared_lock lock(mutex);
         auto it = storage.find(key);
-        if (it == storage.end()) return std::nullopt;
+        if (it == storage.end()) {
+            return std::nullopt;
+        }
         return it->second;
     }
 
@@ -88,8 +103,14 @@ class Cache {
  public:
     explicit Cache(int shard_count) {
         shards.reserve(shard_count);
-        for (int i = 0; i < shard_count; ++i)
+        for (int i = 0; i < shard_count; ++i) {
             shards.push_back(std::make_unique<Shard<KeyType, ValueType>>());
+        }
+    }
+
+    std::optional<ValueType> get_sync(const KeyType& key) const {
+        auto id = getId(key);
+        return shards[id]->get(key);
     }
 
     std::future<std::optional<ValueType>> get_async(const KeyType& key) {
