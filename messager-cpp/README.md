@@ -16,24 +16,6 @@ A high-performance asyncronous tcp messager in C++ for Linux featuring:
     - [boost.asio](https://github.com/boostorg/asio)
 
 ---
-# Project structure
-
-messager-cpp/  
-├── include/  
-|   |   # Header files (.h)   
-│   ├── server.h  
-│   ├── connection.h  
-│   └── user.h  
-├── src/   
-|   |   # Source files (.cpp)  
-│   ├── main.cpp  
-│   ├── server.cpp  
-│   ├── connection.cpp  
-│   └── user.cpp  
-├── CMakeLists.txt  
-└── README.md  
-
----
 
 ## Building
 
