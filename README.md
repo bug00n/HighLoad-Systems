@@ -19,13 +19,6 @@ Below you can see all my projects:
     I also learned Markdown and practiced it by writing documentation.
     </p>
 
-* ### __*[http-server ★](https://github.com/bug00n/HighLoad-Systems/tree/main/HTTP-server-cpp)*__
-
-    <p align="justify">
-    This was my first project where I split the code into multiple files.
-    I learned how header and source files work and how to organize a C++ project.
-    </p>
-
 * ### __*[account-manager ★★](https://github.com/bug00n/HighLoad-Systems/tree/main/account-manager-py)*__
 
     <p align="justify">
